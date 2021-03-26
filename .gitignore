@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Large data
+data/small_screen/matrix.mtx
+data/large_screen/hashTable_out.txt
+data/large_screen/pData.txt
+data/large_screen/matrix.mtx.gz

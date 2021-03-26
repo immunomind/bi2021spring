@@ -29,5 +29,5 @@ def mtx_format_maker(path):
                 
 
 if __name__ == '__main__':
-    path = 'GSM4150377_sciPlex2_A549_Transcription_Modulators_UMI_good.count.matrix'
+    path = '/home/ubuntu/bi2021spring/data/large_screen/matrix.mtx'
     mtx_format_maker(path)
