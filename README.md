@@ -22,9 +22,7 @@ The goal of this project is to tackle the complexity of data analysis by identif
 
 2. Silhouette-score with cosine distance was chosen as a metric. If we denote through a &mdash; the average distance from this object to objects from the same cluster, through b &mdash; the average distance from this object to objects from the nearest cluster (different from the one in which the object itself lies). In our case labels of clusters are *cell type* or *batch*. Then the silhouette of this object is called the value:
 
-<p align="center">
 <img src="https://latex.codecogs.com/gif.latex?s \text = {\frac {b-a}{\max\{a,b\}}} " />
-</p>
     
 3. Generated 3 artificial datasets 500, 15000, 80000 cells and 2, 5, 2 batches respectively. We used [SymSim](https://github.com/YosefLab/SymSim) R library, the code can be found [here]().
 
