@@ -4,7 +4,7 @@
 
 Single-cell sequencing is paving the way for precision medicine. It is the next srep towards making precision medicine more accurate. However, the analysis of single-cell data is incredibly complex with numerous distinct approaches resulting in more than 500 Python and R libraries existing today.
 
-## Project goals and objectives
+## Project goals
 
 The goal of this project is to tackle the complexity of data analysis by identifying the best approaches. The single-cell transcriptomics analysis has multiple steps, but we have focused on data integration &mdash; a crucial step when working with clinical data coming from patients.
 
@@ -22,7 +22,7 @@ The goal of this project is to tackle the complexity of data analysis by identif
 
 2. Silhouette-score with cosine distance was chosen as a metric. If we denote through a &mdash; the average distance from this object to objects from the same cluster, through b &mdash; the average distance from this object to objects from the nearest cluster (different from the one in which the object itself lies). In our case labels of clusters are *cell type* or *batch*. Then the silhouette of this object is called the value:
 
-$${s ={\frac {b-a}{\max\{a,b\}}}}$$
+${s ={\frac {b-a}{\max\{a,b\}}}}$
 
 3. Generated 3 artificial datasets 500, 15000, 80000 cells and 2, 5, 2 batches respectively. We used [SymSim](https://github.com/YosefLab/SymSim) R library, the code can be found [here]().
 
@@ -67,7 +67,7 @@ As a result, based on the existing algorithms for correcting the batch effect, w
 
 ## Usage
 
-You can download and run program on our small example using following commands in your terminal.
+You can download and run program on our small example using following commands in your terminal:
 
 ```bash
 git clone https://github.com/immunomind/bi2021spring.git
