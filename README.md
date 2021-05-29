@@ -22,11 +22,11 @@ The goal of this project is to tackle the complexity of data analysis by identif
 
 2. Silhouette-score with cosine distance was chosen as a metric. If we denote through a &mdash; the average distance from this object to objects from the same cluster, through b &mdash; the average distance from this object to objects from the nearest cluster (different from the one in which the object itself lies). In our case labels of clusters are *cell type* or *batch*. Then the silhouette of this object is called the value:
 
-$${\displaystyle s ={\frac {b-a}{\max\{a,b\}}}}$$
+$${s ={\frac {b-a}{\max\{a,b\}}}}$$
 
-3. Generated 3 artificial datasets 500, 15000, 80000 cells and 2, 5, 2 batches respectively. **НАПИСАТЬ ПРО ЛИБУ И СКРИПТ!!!**
+3. Generated 3 artificial datasets 500, 15000, 80000 cells and 2, 5, 2 batches respectively. We used [SymSim](https://github.com/YosefLab/SymSim) R library, the code can be found [here]().
 
-4. For the downstream work we have chosen 5 different approaches: [Combat]() and [Regress out]() which use linear models for batch correction and [MNN](), [BBKNN]() and [Scanorama]() which in turn are looking for mutual nearest neighbors in others batches for every cell.
+4. For the downstream work we have chosen 5 different approaches: [Combat](https://github.com/zhangyuqing/ComBat-seq) and [Regress out](https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.regress_out.html) which use linear models for batch correction and [MNN](https://github.com/MarioniLab/MNN2017), [BBKNN](https://github.com/Teichlab/bbknn) and [Scanorama](https://github.com/brianhie/scanorama) which in turn are looking for mutual nearest neighbors in others batches for every cell.
 
 5. Based on these 5 libraries, we made a program that for each specific dataset can choose the best approach and apply it to correct the batch effect.
 
@@ -54,7 +54,7 @@ Also in Figure 2 you can see the time it took for each algorithm to work on the 
     <em>Fig. 2. Time performance of different algorithms on different datasets.</em>
 </p>
 
-Figure 3 depicts 
+Figure 3 depicts how clusters change after correction: cell types form separate clusters, and batches are stirred.
 
 <p align="center" width="100%">
     <img src="visualization/before_after.png">
@@ -63,16 +63,18 @@ Figure 3 depicts
     <em>Fig. 3. UMAP before and after correction with Scanorama, labeled by cell type and batch.</em>
 </p>
 
+As a result, based on the existing algorithms for correcting the batch effect, we have created a program that can apply the algorithm chosen by the user or run all algorithms and select a list of the most successful ones (See **Usage** for more information about downloading and running).
 
 ## Usage
+
+You can download and run program on our small example using following commands in your terminal.
 
 ```bash
 git clone https://github.com/immunomind/bi2021spring.git
 git checkout dev
-cd bi2021spring/source
-```
-
-```bash
+cd bi2021spring/
+pip install -r requirements.txt
+cd source/
 python data_integrator.py --adata ../example_data/example.h5ad \
                           --celltype celltype batch \
                           --batch batch \
@@ -80,3 +82,16 @@ python data_integrator.py --adata ../example_data/example.h5ad \
                           --algtorun all \
                           --out example_result
 ```
+
+Where **adata** is expression matrix with genes as columns and cells as rows and also with annotated cell and batch types (you can see more information in --help); **celltype** and **batch** are names of corresponding columns; **do_filter** tells if program apply casual filters (the gene is expressed in more than 100 cells and more than 20 genes have nonzero expression in a cell); **algtorun** means which algorithms will be used for correction or *all* and at the end there will be a list of the best ones; **out** is the directory with results.
+
+We ran this program on Ubuntu 18.04 with 8 threads and 64 Gb RAM. With **algtorun** option equals *all* it has taken approximately 1 m on the small dataset, 10 m on the medium one and 75 m on the big. If your data is more than 100000 cells then we do not recommend using MNN due to too long working time.
+
+## References
+
+1. Haghverdi, L., Lun, A., Morgan, M. et al. Batch effects in single-cell RNA-sequencing data are corrected by matching mutual nearest neighbors. Nat Biotechnol 36, 421–427 (2018).
+2. Hie, B., Bryson, B. & Berger, B. Efficient integration of heterogeneous single-cell transcriptomes using Scanorama. Nat Biotechnol 37, 685–691 (2019).
+3. Krzysztof Polański, Matthew D Young, Zhichao Miao, Kerstin B Meyer, Sarah A Teichmann, Jong-Eun Park, BBKNN: fast batch alignment of single cell transcriptomes, Bioinformatics 36, 3, (2020).
+4. Tran, H.T.N., Ang, K.S., Chevrier, M. et al. A benchmark of batch-effect correction methods for single-cell RNA sequencing data. Genome Biol 21, 12 (2020).
+5. Zhang, X., Xu, C. & Yosef, N. Simulating multiple faceted variability in single cell RNA sequencing. Nat Commun 10, 2611 (2019).
+6. Yuqing Zhang, Giovanni Parmigiani, W Evan Johnson, ComBat-seq: batch effect adjustment for RNA-seq count data, NAR Genomics and Bioinformatics  2, 3, (2020). 
